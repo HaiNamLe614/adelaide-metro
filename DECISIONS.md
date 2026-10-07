@@ -36,3 +36,10 @@ and would strip leading zeros.
 
 - Database password is hardcoded in load.py. Move to env var before
   this goes on GitHub.
+
+**Index on stop_times (stop_id, departure_secs)**
+Measured on 823,126 rows: 0.129 ms with index, 31.110 ms without (241x).
+Without it Postgres does a parallel seq scan, examining ~274k rows per
+worker to return 9, then sorts. With it, the index satisfies both the
+filter and the ORDER BY, so no sort step is needed. Column order matters:
+stop_id first (equality), departure_secs second (range + sort).
