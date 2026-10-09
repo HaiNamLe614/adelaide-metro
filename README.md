@@ -4,9 +4,12 @@ Postgres schema and loader for Adelaide Metro GTFS data: 823k stop times,
 22k trips, 9k stops.
 
 ## Setup
+
+```bash
 docker run --name metro-db -e POSTGRES_PASSWORD=dev -e POSTGRES_DB=metro -p 5432:5432 -d postgres:16
 docker exec -i metro-db psql -U postgres -d metro < schema.sql
 python load.py
+```
 
 ## Design notes
 
