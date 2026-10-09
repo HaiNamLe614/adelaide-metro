@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from sqlalchemy import create_engine, text
 
@@ -5,7 +6,7 @@ def to_secs(t):
     h, m, s = t.split(":")
     return int(h) * 3600 + int(m) * 60 + int(s)
 
-engine = create_engine("postgresql+psycopg2://postgres:dev@localhost:5432/metro")
+engine = create_engine(os.getenv("DATABASE_URL", "postgresql+psycopg2://postgres:dev@localhost:5432/metro"))
 with engine.begin() as conn:
     conn.execute(text("TRUNCATE stop_times, trips, calendar, routes, stops CASCADE"))
 
