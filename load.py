@@ -27,7 +27,7 @@ cal[days] = cal[days].astype(bool)
 cal.to_sql("calendar", engine, if_exists="append", index=False)
 
 trips = pd.read_csv("data/trips.txt", dtype={"route_id": str, "service_id": str, "trip_id": str})
-trips = trips[["route_id", "service_id", "trip_id"]]
+trips = trips[["route_id", "service_id", "trip_id", "trip_headsign", "direction_id"]]
 trips.to_sql("trips", engine, if_exists="append", index=False)
 
 stop_times = pd.read_csv("data/stop_times.txt", dtype={"trip_id": str, "stop_id": str})
